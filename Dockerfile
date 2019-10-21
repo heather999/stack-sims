@@ -6,7 +6,7 @@ ARG EUPS_PRODUCT1=galsim
 ARG EUPS_PRODUCT2=lsst_sims
 ARG EUPS_THROUGH=throughputs
 ARG EUPS_SKY=sims_skybrightness_data
-ARG EUPS_TAG2=sims_w_2019_42_
+ARG EUPS_TAG2=sims_w_2019_42
 ARG EUPS_THROUGH_TAG=DC2production
 ARG LSST_USER=lsst
 ARG LSST_GROUP=lsst
@@ -16,7 +16,7 @@ WORKDIR $LSST_STACK_DIR
 RUN echo "Environment: \n" && env | sort
 
 RUN echo "Executing: eups distrib install $EUPS_PRODUCT $EUPS_TAG" && \
-    source scl_source enable devtoolset-6 && \
+    source scl_source enable devtoolset-8 && \
     gcc --version && \
     echo -e "source scl_source enable devtoolset-6\n$(cat loadLSST.bash)" > loadLSST.bash && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
@@ -32,7 +32,7 @@ RUN echo "Executing: eups distrib install $EUPS_PRODUCT $EUPS_TAG" && \
 
 
 RUN echo "Executing: Remove current tag" && \
-    source scl_source enable devtoolset-6 && \
+    source scl_source enable devtoolset-8 && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
     eups tags --delete=current;' 
 
