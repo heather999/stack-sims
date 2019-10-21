@@ -1,0 +1,29 @@
+name: stack-sims release
+
+on: 
+ release:
+  types: [published]
+
+jobs:
+  build:
+    name: stack-sims release
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Docker login
+        run: echo '${{ secrets.DOCKERHUB_ACCESSTOK }}' | docker login --username heather999 --password-stdin
+      - name: checkout stack-sims
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: Get the tag
+        id: get_tag
+        run: echo ::set-output name=DOCKTAG::${GITHUB_REF/refs\/tags\//}
+      - name: do docker build
+        run: docker build --no-cache -t lsstdesc/stack-sims:${{ steps.get_tag.outputs.DOCKTAG }} -f $GITHUB_WORKSPACE/Dockerfile . 
+      - name: Docker push tag
+        run: docker push  lsstdesc/stack-sims:${{ steps.get_tag.outputs.DOCKTAG }}
+      - name: tag dev
+        run: docker tag lsstdesc/stack-sims:${{ steps.get_tag.outputs.DOCKTAG }} lsstdesc/stack-sims:dev
+      - name: Docker push dev
+        run: docker push lsstdesc/stack-sims:dev
+       
