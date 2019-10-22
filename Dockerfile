@@ -18,7 +18,7 @@ RUN echo "Environment: \n" && env | sort
 RUN echo "Executing: eups distrib install $EUPS_PRODUCT $EUPS_TAG" && \
     source scl_source enable devtoolset-8 && \
     gcc --version && \
-    echo -e "source scl_source enable devtoolset-6\n$(cat loadLSST.bash)" > loadLSST.bash && \
+    echo -e "source scl_source enable devtoolset-8\n$(cat loadLSST.bash)" > loadLSST.bash && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
                   export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
                   eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT1 --nolocks; \
