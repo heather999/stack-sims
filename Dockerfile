@@ -13,9 +13,9 @@ ARG LSST_GROUP=lsst
 
 WORKDIR $LSST_STACK_DIR
 
-RUN echo "Environment: \n" && env | sort
 
-RUN echo "Executing: eups distrib install $EUPS_PRODUCT $EUPS_TAG" && \
+RUN echo "Environment: \n" && env | sort && \
+    echo "Executing: eups distrib install $EUPS_PRODUCT $EUPS_TAG" && \
     source scl_source enable devtoolset-8 && \
     gcc --version && \
     echo -e "source scl_source enable devtoolset-8\n$(cat loadLSST.bash)" > loadLSST.bash && \
@@ -27,25 +27,14 @@ RUN echo "Executing: eups distrib install $EUPS_PRODUCT $EUPS_TAG" && \
                   unset galsim; \
                   eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2 --nolocks; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_THROUGH --nolocks; \
-                  eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks;' 
-
-
-
-RUN echo "Executing: Remove current tag" && \
-    source scl_source enable devtoolset-8 && \
-    /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
-    eups tags --delete=current;' 
-
-#    eups list -t current --showTags=current --name --version | while read n v; do echo eups undeclare --current $n $v; done; \
-#    eups list -t current --showTags=current --name --version | while read n v; do eups undeclare --current $n $v; done;' 
-
-
-RUN rm -Rf python/doc
-RUN rm -Rf python/phrasebooks
-RUN find stack -name "*.pyc" -delete
-RUN (find stack -name "*.so" | xargs strip -s -p) || true
-RUN (find stack -name "src" ! -path "*/Eigen/*" | xargs rm -Rf) || true
-RUN (find stack -name "doc" | xargs rm -Rf) || true
+                  eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks; \
+                  eups tags --delete=current;' && \
+   rm -Rf python/doc && \
+   rm -Rf python/phrasebooks && \
+   find stack -name "*.pyc" -delete && \
+   (find stack -name "*.so" | xargs strip -s -p) || true && \
+   (find stack -name "src" ! -path "*/Eigen/*" | xargs rm -Rf) || true && \
+   (find stack -name "doc" | xargs rm -Rf) || true
 #RUN (find stack -name "tests" | xargs rm -Rf ) || true
 
 
