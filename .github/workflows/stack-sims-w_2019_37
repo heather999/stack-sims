@@ -1,0 +1,22 @@
+name: stack-sims w_2019_37
+
+on: 
+  push:
+    branches:
+      - w_2019_37
+
+jobs:
+  build:
+    name: stack-sims w_2019_37
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Docker login
+        run: echo '${{ secrets.DOCKERHUB_ACCESSTOK }}' | docker login --username heather999 --password-stdin
+      - name: checkout stack-sims
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - name: do docker build
+        run: docker build --no-cache -t lsstdesc/stack-sims:patch -f $GITHUB_WORKSPACE/Dockerfile . 
+      - name: Docker push
+        run: docker push lsstdesc/stack-sims:patch
