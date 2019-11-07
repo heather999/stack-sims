@@ -25,11 +25,12 @@ RUN echo "Environment: \n" && env | sort && \
                   setup galsim; \
                   sed -i -e "s/\/build/\/opt\/lsst\/software\/stack/g" $GALSIM_DIR/lib/python/galsim/meta_data.py; \
                   unset galsim; \
+                  eups list sims_catUtils; \
                   eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2 --nolocks; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_THROUGH --nolocks; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks;' && \
-   /bin/bash $LSST_STACK_DIR/stack/current/Linux64/sims_catUtils/*/support_scripts/get_kepler_light_curves.sh && \
-   /bin/bash $LSST_STACK_DIR/stack/current/Linux64/sims_catUtils/*/support_scripts/get_mdwarf_flares.sh && \
+   /bin/bash $LSST_STACK_DIR/stack/current/Linux64/sims_catUtils/2.13.0.sims-2-gcb1fab61+26/support_scripts/get_kepler_light_curves.sh && \
+   /bin/bash $LSST_STACK_DIR/stack/current/Linux64/sims_catUtils/2.13.0.sims-2-gcb1fab61+26/support_scripts/get_mdwarf_flares.sh && \
    rm -Rf python/doc && \
    rm -Rf python/phrasebooks && \
    find stack -name "*.pyc" -delete && \
