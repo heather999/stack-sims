@@ -20,14 +20,18 @@ RUN echo "Environment: \n" && env | sort && \
     gcc --version && \
     echo -e "source scl_source enable devtoolset-6\n$(cat loadLSST.bash)" > loadLSST.bash && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
+                  pip freeze > $LSST_STACK_DIR/require.txt; \
+                  sed -i 's/astropy==3.1.2/astropy==3.2.3/g'  $LSST_STACK_DIR/require.txt; \
+                  pip install -c $LSST_STACK_DIR/require.txt astropy==3.2.3; \
                   export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
                   eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT1 --nolocks; \
                   setup galsim; \
                   sed -i -e "s/\/build/\/opt\/lsst\/software\/stack/g" $GALSIM_DIR/lib/python/galsim/meta_data.py; \
                   unset galsim; \
                   eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2 --nolocks; \
-                  eups list sims_catUtils; \
                   setup sims_catUtils; \
+                  chmod ugo+x $SIMS_CATUTILS_DIR/support_scripts/get_kepler_light_curves.sh; \
+                  chmod ugo+x $SIMS_CATUTILS_DIR/support_scripts/get_mdwarf_flares.sh; \
                   $SIMS_CATUTILS_DIR/support_scripts/get_kepler_light_curves.sh; \
                   $SIMS_CATUTILS_DIR/support_scripts/get_mdwarf_flares.sh; \
                   unset sims_catUtils; \
