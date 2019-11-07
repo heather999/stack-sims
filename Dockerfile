@@ -42,7 +42,7 @@ RUN echo "Environment: \n" && env | sort && \
    find stack -name "*.pyc" -delete && \
    (find stack -name "*.so" | xargs strip -s -p) || true && \
    (find stack -name "src" ! -path "*/Eigen/*" | xargs rm -Rf) || true && \
-   (find stack -name "doc" | xargs rm -Rf) || true
-#RUN (find stack -name "tests" | xargs rm -Rf ) || true
+   (find stack -name "doc" | xargs rm -Rf) || true && \
+   (find stack -name "tests" | xargs rm -Rf ) || true
 
 
