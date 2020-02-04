@@ -20,6 +20,7 @@ RUN echo "Environment: \n" && env | sort && \
     gcc --version && \
     echo -e "source scl_source enable devtoolset-8\n$(cat loadLSST.bash)" > loadLSST.bash && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
+                  pip freeze > $LSST_STACK_DIR/require.txt; \
                   export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
                   eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT1 --nolocks; \
                   setup galsim; \
@@ -27,7 +28,8 @@ RUN echo "Environment: \n" && env | sort && \
                   unset galsim; \
                   eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2 --nolocks; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_THROUGH --nolocks; \
-                  eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks;' && \
+                  eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks; \
+                  pip install -c $LSST_STACK_DIR/require.txt pyarrow==0.13.0;' && \
    rm -Rf python/doc && \
    rm -Rf python/phrasebooks && \
    find stack -name "*.pyc" -delete && \
