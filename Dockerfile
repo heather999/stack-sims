@@ -27,11 +27,12 @@ RUN echo "Environment: \n" && env | sort && \
                   unset galsim; \
                   eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2 --nolocks; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_THROUGH --nolocks; \
+                  eups admin clearCache; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks;' && \
    rm -Rf python/doc && \
    rm -Rf python/phrasebooks && \
    find stack -name "*.pyc" -delete && \
-   (find stack -name "*.so" | xargs strip -s -p) || true && \
+   (find stack -name "*.so" ! -path "*/xpa/*" | xargs strip -s -p) || true && \
    (find stack -name "src" ! -path "*/Eigen/*" | xargs rm -Rf) || true && \
    (find stack -name "doc" | xargs rm -Rf) || true
 #RUN (find stack -name "tests" | xargs rm -Rf ) || true
