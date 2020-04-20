@@ -1,4 +1,4 @@
-FROM lsstsqre/centos:7-stack-lsst_distrib-w_2020_14
+FROM lsstsqre/centos:7-stack-lsst_distrib-w_2020_07
 MAINTAINER Heather Kelly <heather@slac.stanford.edu>
 
 ARG LSST_STACK_DIR=/opt/lsst/software/stack
@@ -6,7 +6,7 @@ ARG EUPS_PRODUCT1=galsim
 ARG EUPS_PRODUCT2=lsst_sims
 ARG EUPS_THROUGH=throughputs
 ARG EUPS_SKY=sims_skybrightness_data
-ARG EUPS_TAG2=sims_w_2020_14
+ARG EUPS_TAG2=sims_w_2020_07
 ARG EUPS_THROUGH_TAG=DC2production
 ARG LSST_USER=lsst
 ARG LSST_GROUP=lsst
@@ -25,7 +25,9 @@ RUN echo "Environment: \n" && env | sort && \
                   setup galsim; \
                   sed -i -e "s/\/build/\/opt\/lsst\/software\/stack/g" $GALSIM_DIR/lib/python/galsim/meta_data.py; \
                   unset galsim; \
-                  eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2 --nolocks;' && \
+                  eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2 --nolocks; \
+                  eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_THROUGH --nolocks; \
+                  eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks;' && \
    rm -Rf python/doc && \
    rm -Rf python/phrasebooks && \
    find stack -name "*.pyc" -delete && \
