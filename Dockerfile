@@ -20,7 +20,6 @@ RUN echo "Environment: \n" && env | sort && \
     gcc --version && \
     echo -e "source scl_source enable devtoolset-8\n$(cat loadLSST.bash)" > loadLSST.bash && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
-                  export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
                   eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT1 --nolocks; \
                   setup galsim; \
                   sed -i -e "s/\/build/\/opt\/lsst\/software\/stack/g" $GALSIM_DIR/lib/python/galsim/meta_data.py; \
@@ -38,3 +37,5 @@ RUN echo "Environment: \n" && env | sort && \
        ##           eups admin clearCache; \
         #          eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks;' && \
 
+
+# export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
