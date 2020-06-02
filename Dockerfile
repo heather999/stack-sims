@@ -20,11 +20,14 @@ RUN echo "Environment: \n" && env | sort && \
     gcc --version && \
     echo -e "source scl_source enable devtoolset-8\n$(cat loadLSST.bash)" > loadLSST.bash && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
+                  pip freeze > $LSST_STACK_DIR/require.txt; \
                   eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT1 --nolocks; \
                   setup galsim; \
                   sed -i -e "s/\/build/\/opt\/lsst\/software\/stack/g" $GALSIM_DIR/lib/python/galsim/meta_data.py; \
                   unset galsim; \
-                  eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2 --nolocks;' && \
+                  eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2 --nolocks; \
+                  eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_THROUGH --nolocks; \
+                  eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks;' && \
    rm -Rf python/doc && \
    rm -Rf python/phrasebooks && \
    find stack -name "*.pyc" -delete && \
