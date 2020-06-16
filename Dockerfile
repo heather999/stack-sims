@@ -13,19 +13,18 @@ ARG LSST_GROUP=lsst
 
 WORKDIR $LSST_STACK_DIR
 
+# June 2020 - galsim is no longer installed as eups package but is pre-installed via conda-forge
+#                  export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
+#                  eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT1 --nolocks; \
+#                  setup galsim; \
+#                  sed -i -e "s/\/build/\/opt\/lsst\/software\/stack/g" $GALSIM_DIR/lib/python/galsim/meta_data.py; \
+#                  unset galsim; \
+
 
 RUN echo "Environment: \n" && env | sort && \
     echo "Executing: eups distrib install $EUPS_PRODUCT $EUPS_TAG" && \
-    source scl_source enable devtoolset-8 && \
-    gcc --version && \
-    echo -e "source scl_source enable devtoolset-8\n$(cat loadLSST.bash)" > loadLSST.bash && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
                   pip freeze > $LSST_STACK_DIR/require.txt; \
-                  export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
-                  eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT1 --nolocks; \
-                  setup galsim; \
-                  sed -i -e "s/\/build/\/opt\/lsst\/software\/stack/g" $GALSIM_DIR/lib/python/galsim/meta_data.py; \
-                  unset galsim; \
                   eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2 --nolocks; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_THROUGH --nolocks; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks;' && \
