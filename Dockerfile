@@ -28,7 +28,8 @@ RUN echo "Environment: \n" && env | sort && \
                   eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2 --nolocks; \
                   export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_THROUGH --nolocks; \
-                  eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks;' && \
+                  eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks; \
+                  setup ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2' && \
    rm -Rf python/doc && \
    rm -Rf python/phrasebooks && \
    find stack -name "*.pyc" -delete && \
