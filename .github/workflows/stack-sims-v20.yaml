@@ -3,7 +3,7 @@ name: stack-sims latest
 on:
   push:
     branches: 
-      - 20_0_0
+      - v20_0_0
 
 jobs:
   build:
