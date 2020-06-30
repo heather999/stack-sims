@@ -3,7 +3,8 @@ MAINTAINER Heather Kelly <heather@slac.stanford.edu>
 
 ARG LSST_STACK_DIR=/opt/lsst/software/stack
 ARG EUPS_PRODUCT1=galsim
-ARG EUPS_PRODUCT2=lsst_sims
+#ARG EUPS_PRODUCT2=lsst_sims
+ARG EUPS_PRODUCT2=sims_maps
 ARG EUPS_THROUGH=throughputs
 ARG EUPS_SKY=sims_skybrightness_data
 ARG EUPS_TAG2=sims_w_2020_22
@@ -27,6 +28,7 @@ RUN echo "Environment: \n" && env | sort && \
                   pip freeze > $LSST_STACK_DIR/require.txt; \
                   export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
                   eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2 --nolocks; \
+                  cat /opt/lsst/software/stack/stack/miniconda3-py37_4.8.2-1a1d771/EupsBuildDir/Linux64/sims_maps-2017.05.08-8-gdd04fc0/build.msg; \
                   cat /opt/lsst/software/stack/stack/miniconda3-py37_4.8.2-1a1d771/EupsBuildDir/Linux64/sims_maps-2017.05.08-8-gdd04fc0/build.log; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_THROUGH --nolocks; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks; \
