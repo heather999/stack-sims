@@ -13,6 +13,11 @@ ARG LSST_GROUP=lsst
 
 WORKDIR $LSST_STACK_DIR
 
+USER root
+RUN yum install -y wget \
+    which
+USER lsst
+
 # June 2020 - galsim is no longer installed as eups package but is pre-installed via conda-forge
 #                  export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
 #                  eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT1 --nolocks; \
