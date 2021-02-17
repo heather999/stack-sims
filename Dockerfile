@@ -4,6 +4,7 @@ MAINTAINER Heather Kelly <heather@slac.stanford.edu>
 RUN zypper install -y bash \
         curl \
         patch \
+        tar \
         wget \
         which
 
