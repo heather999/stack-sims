@@ -3,6 +3,7 @@ MAINTAINER Heather Kelly <heather@slac.stanford.edu>
 
 RUN zypper install -y bash \
         curl \
+        gzip \
         patch \
         tar \
         wget \
