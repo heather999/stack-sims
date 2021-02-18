@@ -31,10 +31,8 @@ RUN echo "Environment: \n" && env | sort && \
     bash newinstall.sh -bct && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
                   eups distrib install ${EUPS_TAG:+"-t"} $EUPS_TAG $EUPS_PRODUCT --nolocks; \
-                  curl -sSL https://raw.githubusercontent.com/lsst/shebangtron/master/shebangtron | python; '
-                  
-                  
-                  #echo 'hooks.config.site.lockDirectoryBase = None' >> site/startup.py; ' 
+                  curl -sSL https://raw.githubusercontent.com/lsst/shebangtron/master/shebangtron | python; \
+                  echo 'hooks.config.site.lockDirectoryBase = None' >> $LSST_STACK_DIR/current/site/startup.py; ' 
                   
                   #&& \
    #rm -Rf python/doc && \
