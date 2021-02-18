@@ -26,12 +26,12 @@ WORKDIR $LSST_STACK_DIR
 
 
 
-#RUN echo "Environment: \n" && env | sort && \
-#    curl -OL https://raw.githubusercontent.com/lsst/lsst/w.2021.03/scripts/newinstall.sh && \
-#    bash newinstall.sh -bct && \
-#    /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
-#                  eups distrib install ${EUPS_TAG:+"-t"} $EUPS_TAG $EUPS_PRODUCT --nolocks; \
-#                  curl -sSL https://raw.githubusercontent.com/lsst/shebangtron/master/shebangtron | python; '
+RUN echo "Environment: \n" && env | sort && \
+    curl -OL https://raw.githubusercontent.com/lsst/lsst/w.2021.03/scripts/newinstall.sh && \
+    bash newinstall.sh -bct && \
+    /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
+                  eups distrib install ${EUPS_TAG:+"-t"} $EUPS_TAG $EUPS_PRODUCT --nolocks; \
+                  curl -sSL https://raw.githubusercontent.com/lsst/shebangtron/master/shebangtron | python; '
                   
                   
                   #echo 'hooks.config.site.lockDirectoryBase = None' >> site/startup.py; ' 
