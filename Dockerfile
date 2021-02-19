@@ -5,7 +5,6 @@ RUN zypper install -y bash \
         curl \
         gzip \
         patch \
-        slurm \
         tar \
         wget \
         which
@@ -21,6 +20,10 @@ ARG EUPS_TAG=w_2021_03
 #ARG LSST_GROUP=lsst
 
 WORKDIR $LSST_STACK_DIR
+
+ADD sbatch.tar.bz2 /nersc_slurm
+ENV PATH="/nersc_slurm:${PATH}"
+ENV LD_LIBRARY_PATH="/nersc_slurm:${LD_LIBRARY_PATH}
 
 
 #USER lsst
