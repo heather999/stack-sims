@@ -5,6 +5,7 @@ RUN zypper install -y bash \
         curl \
         gzip \
         patch \
+        slurm \
         tar \
         wget \
         which
@@ -32,7 +33,7 @@ RUN echo "Environment: \n" && env | sort && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
                   eups distrib install ${EUPS_TAG:+"-t"} $EUPS_TAG $EUPS_PRODUCT --nolocks; \
                   curl -sSL https://raw.githubusercontent.com/lsst/shebangtron/master/shebangtron | python; \
-                  echo 'hooks.config.site.lockDirectoryBase = None' >> $LSST_STACK_DIR/current/site/startup.py; ' 
+                  echo 'hooks.config.site.lockDirectoryBase = None' >> $LSST_STACK_DIR/stack/current/site/startup.py; ' 
                   
                   #&& \
    #rm -Rf python/doc && \
