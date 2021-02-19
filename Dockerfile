@@ -23,7 +23,7 @@ WORKDIR $LSST_STACK_DIR
 
 ADD sbatch.tar.bz2 /nersc_slurm
 ENV PATH="/nersc_slurm:${PATH}"
-ENV LD_LIBRARY_PATH="/nersc_slurm:${LD_LIBRARY_PATH}
+ENV LD_LIBRARY_PATH="/nersc_slurm:${LD_LIBRARY_PATH}"
 
 
 #USER lsst
