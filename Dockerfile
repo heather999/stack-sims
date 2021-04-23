@@ -1,4 +1,4 @@
-FROM lsstsqre/centos:7-stack-lsst_distrib-w_2021_16
+FROM lsstsqre/centos:7-stack-lsst_distrib-w_2021_17
 MAINTAINER Heather Kelly <heather@slac.stanford.edu>
 
 ARG LSST_STACK_DIR=/opt/lsst/software/stack
@@ -6,7 +6,7 @@ ARG EUPS_PRODUCT1=galsim
 ARG EUPS_PRODUCT2=lsst_sims
 ARG EUPS_THROUGH=throughputs
 ARG EUPS_SKY=sims_skybrightness_data
-ARG EUPS_TAG2=sims_w_2021_16
+ARG EUPS_TAG2=sims_w_2021_17
 ARG EUPS_THROUGH_TAG=DC2production
 ARG LSST_USER=lsst
 ARG LSST_GROUP=lsst
