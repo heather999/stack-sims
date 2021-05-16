@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     name: stack-sims release
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Check Disk Space
         run: df -h && sudo apt-get clean && df -h 
