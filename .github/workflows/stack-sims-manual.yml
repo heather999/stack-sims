@@ -7,9 +7,6 @@ on:
         description: 'LSST Sci Pipelines tag'
         required: true
   
-  push:
-    branches: 
-      - master
 
 jobs:
   build:
