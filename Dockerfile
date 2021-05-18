@@ -6,7 +6,7 @@ ARG LSST_STACK_DIR=/opt/lsst/software/stack
 ARG EUPS_PRODUCT2=lsst_sims
 ARG EUPS_THROUGH=throughputs
 ARG EUPS_SKY=sims_skybrightness_data
-ARG EUPS_TAG2=sims_$LSST_TAG
+ARG EUPS_TAG2=sims_
 ARG EUPS_THROUGH_TAG=DC2production
 ARG LSST_USER=lsst
 ARG LSST_GROUP=lsst
@@ -23,7 +23,7 @@ RUN echo "Environment: \n" && env | sort && \
     echo "Executing: eups distrib install $EUPS_PRODUCT $EUPS_TAG" && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
                   pip freeze > $LSST_STACK_DIR/require.txt; \
-                  eups distrib install -t sims_$LSST_TAG $EUPS_PRODUCT2 --nolocks; \
+                  eups distrib install -t $EUPS_TAG2$LSST_TAG $EUPS_PRODUCT2 --nolocks; \
                   export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_THROUGH --nolocks; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks;' && \
