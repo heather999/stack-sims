@@ -1,6 +1,12 @@
 name: stack-sims latest
 
 on:
+  workflow_dispatch:
+    inputs:
+      lsst_tag:
+        description: 'LSST Sci Pipelines tag'
+        required: true
+  
   push:
     branches: 
       - master
@@ -21,7 +27,7 @@ jobs:
       - name : Docker prune
         run: sudo docker system prune && df -h 
       - name: do docker build
-        run: docker build --no-cache -t lsstdesc/stack-sims:latest -f $GITHUB_WORKSPACE/Dockerfile . 
+        run: docker build --no-cache --build-arg LSST_TAG=${{ github.event.inputs.lsst_tag}} -t lsstdesc/stack-sims:latest -f $GITHUB_WORKSPACE/Dockerfile . 
       - name: Docker push
         run: docker push lsstdesc/stack-sims:latest
        
