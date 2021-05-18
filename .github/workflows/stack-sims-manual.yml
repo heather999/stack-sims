@@ -1,12 +1,15 @@
-name: stack-sims latest
+name: stack-sims manual latest
 
 on:
-  schedule:
-    - cron: '45 10 * * 4'
+  workflow_dispatch:
+    inputs:
+      lsst_tag:
+        description: 'LSST Sci Pipelines tag'
+        required: true
+  
   push:
     branches: 
       - master
-  workflow_dispatch:
 
 jobs:
   build:
@@ -21,10 +24,8 @@ jobs:
         uses: actions/checkout@v2
       - name : Docker prune
         run: sudo docker system prune && df -h 
-      - name : Get weekly number
-        run:  echo "LSST_TAG=w_2021_$(date "+%U")" >> $GITHUB_ENV
       - name: do docker build
-        run: docker build --no-cache --build-arg LSST_TAG=${{env.LSST_TAG}} -t lsstdesc/stack-sims:latest -f $GITHUB_WORKSPACE/Dockerfile . 
+        run: docker build --no-cache --build-arg LSST_TAG=${{github.event.inputs.lsst_tag}} -t lsstdesc/stack-sims:latest -f $GITHUB_WORKSPACE/Dockerfile . 
       - name: test build
         run: docker run --rm lsstdesc/stack-sims:latest /bin/bash -c "source /opt/lsst/software/stack/loadLSST.bash && setup lsst_distrib"
       - name: Docker push
