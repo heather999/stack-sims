@@ -22,11 +22,22 @@ jobs:
       - name : Docker prune
         run: sudo docker system prune && df -h 
       - name : Get weekly number
-        run:  echo "LSST_TAG=w_2021_$(date "+%U")" >> $GITHUB_ENV
+        run: |
+          echo "LSST_TAG=w_2021_$(date "+%U")" >> $GITHUB_ENV
+          echo "DATE_TAG=$(date "+%F")" >> $GITHUB_ENV
       - name: do docker build
         run: docker build --no-cache --build-arg LSST_TAG=${{env.LSST_TAG}} -t lsstdesc/stack-sims:latest -f $GITHUB_WORKSPACE/Dockerfile . 
       - name: test build
         run: docker run --rm lsstdesc/stack-sims:latest /bin/bash -c "source /opt/lsst/software/stack/loadLSST.bash && setup lsst_distrib"
       - name: Docker push
         run: docker push lsstdesc/stack-sims:latest
+      - name: tag weekly
+        run: |
+          docker tag lsstdesc/stack-sims:latest lsstdesc/stack-sims:${{env.LSST_TAG}}-sims_${{env.LSST_TAG}}-${{env.DATE_TAG}}
+          docker push lsstdesc/stack-sims:${{env.LSST_TAG}}-sims_${{env.LSST_TAG}}-${{env.DATE_TAG}}
+          docker tag lsstdesc/stack-sims:latest lsstdesc/stack-sims:${{env.LSST_TAG}}-sims_${{env.LSST_TAG}}
+          docker push lsstdesc/stack-sims:${{env.LSST_TAG}}-sims_${{env.LSST_TAG}}
+  
+
+          
        
