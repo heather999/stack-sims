@@ -23,7 +23,7 @@ RUN echo "Environment: \n" && env | sort && \
     echo "Executing: eups distrib install $EUPS_PRODUCT $EUPS_TAG" && \
     /bin/bash -c 'source $LSST_STACK_DIR/loadLSST.bash; \
                   pip freeze > $LSST_STACK_DIR/require.txt; \
-                  eups distrib install ${EUPS_TAG2:+"-t"} $EUPS_TAG2 $EUPS_PRODUCT2 --nolocks; \
+                  eups distrib install -t sims_$LSST_TAG $EUPS_PRODUCT2 --nolocks; \
                   export EUPS_PKGROOT=https://eups.lsst.codes/stack/src; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_THROUGH --nolocks; \
                   eups distrib install ${EUPS_THROUGH_TAG:+"-t"} $EUPS_THROUGH_TAG $EUPS_SKY --nolocks;' && \
